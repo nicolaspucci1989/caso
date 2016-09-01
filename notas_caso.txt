@@ -67,6 +67,7 @@
 		CPU puede continuar con otro proceso.
 
 		Memoria contigua.
+
 			La memoria es usualmente dividida en dos particiones: una para el sistema operativo residente y
 		una para los procesos de usuario. Podemos ubicar el SO en memoria baja o alta. El mayor factor que
 		afecta esta decisión en la ubicacion del vector de interrupciones.
@@ -74,6 +75,9 @@
 		lo tanto necesitamos considerar como alocar memoria disponible a los proceso que esta en cola de espera
 		para ser llevados a memoria. En memoria contigua, cada proceso esta contenido en una sola seccion de
 		memoria que es contigua a la seccion que contiene el proceso siguiente.
+
+			-Proteccion de memoria.
+		
 
 
 		Paginacion.
