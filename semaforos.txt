@@ -1,0 +1,14 @@
+-Secuencia ABBAC...
+  A       B       C
+  P(m)     P(i)     P(r)
+  P(x)     P(y)     P(r)
+  P(x)              P(y)
+                    P(y)
+
+  V(y)     V(x)     V(x)
+  V(y)     V(r)     V(x)
+                    V(i)
+                    V(i)
+
+  valores iniciales:
+    m = 1, x = 2, y = 0, i = 0, r = 0.
