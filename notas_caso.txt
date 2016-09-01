@@ -59,6 +59,8 @@
 		paginas y los frames de paginas tienen por los general el mismo tamaño. Las transferencias
 		disco-RAM siempre son de paginas enteras.
 
+		<--------------------------------Procesos-------------------------------->
+
 		Multicolas
 
 		Multilevel feedback queue:
@@ -79,7 +81,6 @@
 			milisegundos al proceso que encabeza la cola 1. Si no completa su ejecucion, sera desalojado y
 			movido a la cola 2. Los procesos en la cola 2 se ejecutan de forma FCFS pero solo son ejecutados
 			cuando las colas 0 y 1 estan vacias.
-
 
 		<--------------------------------Threads-------------------------------->
 
