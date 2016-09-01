@@ -45,6 +45,15 @@
 
 		Paginacion.
 
+			Cuando un programa ejecuta una instruccion como
+					MOV REG,1000
+		lo hace para copiar los contenidos de la direccion de memoria a REG (o viceversa). Las direcciones
+		pueden ser generadas usando indices, registros base, registros de segmento, u otras formas.
+			Estas direcciones generadas por programas son llamadas direcciones virtuales y forman el espacio
+		de direcciones virtual. En computadoras sin memoria virtual, la direccion virtual el colocada
+		directamente en el bus de memoria y hace que la palabra de memoria fisica con la misma direccion
+		sea leida o escrita. Cuando se usa memoria virtual, las direcciones virtuales no var directamente
+		al bus. En cambio, van al MMU que mapea la direccion virtual a la memoria fisica.
 			El espacio de direccion virtual consiste de unidades de tamaño fijo llamadas paginas. El
 		Bloque correspondiente en la memoria fisica se llama frame de pagina (bloque de pagina). Las
 		paginas y los frames de paginas tienen por los general el mismo tamaño. Las transferencias
