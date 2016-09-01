@@ -14,6 +14,29 @@
 		Simultaneamente, chequea si la direccion ofrecida es igual o mayor que el valor del registro
 		limite, en tal caso se generea una (excepcion) error y se aborta el acceso.
 
+		Direccion Lögica vs Física
+
+			Una direccion lógica es la genera la CPU, mientras que una direccion vista por la unidad de
+		memoria -es decir, la que es cargadad en el registro de direccion de memoria de la memoria- es una
+		direccion física.
+			Los metodos de union de direccion en timepo de compilacion y en tiempo de carga genera direcciones
+		lógicas y físicas identicas. Sin embargo, el esquema de uniob de direccion en tiempo de ejecucion
+		resulta en direcciones físicas y lógicas distintas. En este caso, nos referimos a ls direccion lógica
+		como una direccion virtual. El conjuto de direcciones lógicas generadas por un programa es el espacio
+		de direcciones lógicas. El conjunto de todas las direcciones físicas que corresponden a estas direcciones
+		lógicas es el espacio de direcciones físicas. Por lo tanto, en el esquema de union de direccione durante
+		ejecucion, las direcciones físicas y lógicas difieren.
+			El mapeo durante ejecucion de direcciones virtuales a físicas es hecho por un dispositivo de hardware
+		llamado memory-management unit (MMU). Podemos elegir de muchos métodos distintos para lograr tal mapeo.
+		El registro base ahora se llama reigstro de reubicacion. El valor en este registro es sumado a toda
+		direccion generada por un proceso de usuario en el momento que la direccion es enviada a memoria.
+		Por ejemplo, si la direccion base esta en 14000, entonces un intento del usuario de direccionar la
+		ubicacion 0 es dinamicamente reubicada a la ubicacion 14000; un acceso a la ubicacion 346 es mapeado a
+		la ubicacion 14346.
+			El programa del usuario nunca ve la direccion real. El programa puede crear un puntero a la direcion
+		346, guardarlo en memoria, manipularlo, y compararlo con otras direcciones--todo como el número 346.
+		Solo cuando es usado como direccion de memoria es reubicado en relacion al registro base.	
+
 		Swapping (intercambiar)
 
 			Consiste en traer cada proceso en su enteridad, correrlo por un tiempo, luego ponerlo en
