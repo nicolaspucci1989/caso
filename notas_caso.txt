@@ -1,10 +1,4 @@
 						<------------------- MEMORIA ------------------->
-							Address Space (espacio de memoria)
-
-			Es el conjunto de direcciones que un proceso puede usar para direccionar memoria.
-		Cadad proceso tiene su propio espacio de memoria, independiente de aquellos que pertencen
-		a otros procesos.
-
 		Registro Base Limite:
 
 			Esta solucion usa una version particularmente simple de relocacion dinamica.
@@ -20,7 +14,7 @@
 		Simultaneamente, chequea si la direccion ofrecida es igual o mayor que el valor del registro
 		limite, en tal caso se generea una (excepcion) error y se aborta el acceso.
 
-						Swapping (intercambiar)
+		Swapping (intercambiar)
 
 			Consiste en traer cada proceso en su enteridad, correrlo por un tiempo, luego ponerlo en
 		disco. Los procesos desocupados en su mayoria son almacenados en disco, para que no ocupar
@@ -36,6 +30,7 @@
 		otros procesos.
 
 		Memoria Virtual.
+
 			La idea basica de memoria virtual es que cada programa tiene su propio espacio de direcciones,
 		que se divide en bloques llamados páignas. Cada pagina es un rango de direcciones contiguo. Estas
 		paginas son mapeadas a memoria fisica, pero no todas las paginas tiene que estar en memoria fisica
@@ -56,8 +51,8 @@
 		disco-RAM siempre son de paginas enteras.
 
 		Multicolas
-		
-			Multilevel feedback queue:
+
+		Multilevel feedback queue:
 				Permite que un proceso se mueva entre colas. La idea es separar procesos de acuerdo a
 			sus a caracteristicas de rafaga de CPU. Si un proceso usa mucho timepo de CPU, sera movido
 			a una cola de menor prioridad. Este esquema deja a los procesos atados por E/S y procesos
@@ -78,7 +73,9 @@
 
 
 		<--------------------------------Threads-------------------------------->
+
 		Beneficios:
+
 			Responsividad: el multihilo en aplicaciones interactivas puede permitir que un programa continue
 				corriendo inclusive si parte de el esta bloqueado o si esta realizando una operacion extensa,
 				por lo tanto aumentando la responsividad para el usuario.
@@ -96,6 +93,7 @@
 				un solo hilo solo pupede correr en un procesador, sin importar cuantos esten disponibles.
 
 		Modelos Multihilo:
+
 			Muchos a Uno: este modelo mapea varios hilos a nivel usuario a un hilo de kernel. El manejo de threads
 				es hecho por la libreria de threads en espacio de usuario, para que sea eficiente. Sin embargo,
 				todo el proceso se bloqueara si un thread hace un llamado al sistema de bloqueo. Ademas, porque solo
