@@ -35,7 +35,7 @@
 		la ubicacion 14346.
 			El programa del usuario nunca ve la direccion real. El programa puede crear un puntero a la direcion
 		346, guardarlo en memoria, manipularlo, y compararlo con otras direcciones--todo como el número 346.
-		Solo cuando es usado como direccion de memoria es reubicado en relacion al registro base.	
+		Solo cuando es usado como direccion de memoria es reubicado en relacion al registro base.
 
 		Swapping (intercambiar)
 
@@ -65,6 +65,16 @@
 			La memoria virtual funciona bien en sistemas multiprogramacion, con partes de distintos programas
 		en memoria al mismo tiempo. Mientras un programa espera que sus piezas sean enviadas a memoria, el
 		CPU puede continuar con otro proceso.
+
+		Memoria contigua.
+			La memoria es usualmente dividida en dos particiones: una para el sistema operativo residente y
+		una para los procesos de usuario. Podemos ubicar el SO en memoria baja o alta. El mayor factor que
+		afecta esta decisión en la ubicacion del vector de interrupciones.
+			Usualmente queremos que varios procesos de usuario residan en memoria todos al mismo tiempo. Por
+		lo tanto necesitamos considerar como alocar memoria disponible a los proceso que esta en cola de espera
+		para ser llevados a memoria. En memoria contigua, cada proceso esta contenido en una sola seccion de
+		memoria que es contigua a la seccion que contiene el proceso siguiente.
+
 
 		Paginacion.
 
