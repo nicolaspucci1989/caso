@@ -1,0 +1,278 @@
+1-a) Que evento provoca la trasición:
+
+	transición 1 (Listo-->Ejecutando)
+	Esta transición ocurre cuando todos los procesos tuvieron su justo tiempo de ejecución y es
+	tiempo de que el primer proceso disponga de la CPU para ejecutarse nuevamente.
+
+	transición 2 (Ejecutando-->Listo)
+	Esta transición es provocada por el scheduler de procesos, sin que el proceso lo
+	advierta. Ocurre cuando el scheduler decide que el proceso se ha ejecutado por un
+	tiempo suficiente, y es tiempo de dejar que otro proceso ocupe la CPU.
+
+	transición 3 (Ejecutando-->Bloqueado)
+	Ocurre cuando el sistema operativo descubre que un proceso no puede continuar en ese
+	instante. En algunos sistemas el proceso puede ejecutar un llamado al sistema, como
+	pause, para entrar en el estado bloqueado. En otros sistemas, incluyendo UNIX, donde
+	un proceso lee de un pipe o un archivo especial (ej. la terminal) y no hay input
+	disponible, el proceso se bloquea automáticamente.
+
+	transición 4 (Bloqueado-->Listo)
+	Ocurre cuando el evento externo para el cual el proceso estaba esperando (como la
+	llegada de input) ocurre. Si ningún otro proceso esta corriento en ese instante,
+	se disparara la transición Listo-->Ejecutando y el proceso comenzara a ejecutarse.
+	De otra manera puede ser que tenga que esperar en estado Listo por un tiempo hasta
+	que la CPU esté disponible y 1 su turno.
+
+	Base de datos necesaria:
+			Es necesaria una tabla de control de procesos que contenga la información necesaria de cada
+ 		proceso, debe contener los bloques de control de procesos con la siguiente información:
+			- Estado del proceso,
+				el estado puede ser: a ejecutar, ejecutando, listo, bloqueado.
+			- Contador de programa,
+				indica la dirección en donde se encuentra la siguiente instruccion a ejecutar para un proceso
+			en particular.
+			- Registros del CPU,
+				estos registros varian en tipo y numero, dependiendo de la arquitectura del computador. Incluyen
+			acumuladores, registros índice, punteros de stack, y registros de proposito general, ademas de
+			cualquier información de código condicional. Junto con el contador de programa, el estado de esta
+			información debe ser guardada cuando ocurre una interrupcion, para permitir que el procesoo continúe
+			mas tarde de forma correcta.
+			- información del schedule de CPU,
+				esta información incluye prioridad de procesos, punteros a colas de prioridad, y cualquier otro
+			parámetro de schedule.
+			- información del manejo de memoria,
+				esta información puede incluir items tales como el valor del registro base y limite y las tablas de
+			paginas, o tablas de segmento, dependiendo del sistema de memoria del sistema operativo.
+			- información para accounting,
+				esta información incluye la cantidad de uso de CPU, limites de tiempo, numero de trabajo o proceso,
+			etc.
+			- información del estado E/S,
+				esta información incluye la lista de dispositivos de E/S asignados al proceso, una lista de archivos
+			abiertos, etc.
+		Tabla de memoria.
+				- Asignacion de memoria principal a los procesos.
+				- Asignacion de memoria secundaria a procesos.
+				- Atributos de protecccion de bloques de memoria principal o virtual, tales como que procesos pueden
+					acceder ciertas regiones de memoria compartida.
+				- Informacion necesaria para manejar la memoria virtual.
+			Tablas de E/S.
+				Para manejar los dispositivos de E/S y canales del systems. En algun momento, un dispositivo de E/S puede
+				que este disponible o asignado a un proceso en particular. Si una operacion de E/S estsa en progreso, el SO
+				necesita saber el estado de la operacion de E/S y la ubicacion en memoria principal siendo usada como la
+				fuente o destino de la transferencia de E/S.
+			Tablas de archivos.
+				Estas tablas proveen informacion acerca de la existencia de archivos, su ubicacion en memoria secundaria,
+				estado actual, y otros atributos. Mucha de esta informacion es mantenida y usada por un systema de manejo de
+				archivos, en tal caso el SO tiene poco o ningun conocimiento de estos archivos.
+<============================================================================================================>
+
+2-a) A comenzar-->Listo:
+		El Planificador de Procesos mueve un proceso de a comenzar a listo cunado el SO
+		esta preparado para tomar procesos adicionales. La mayoria de los sistemas
+		imponen un limite basado en el numero de procesos que existen o la cantidad
+		de memoria virtual asignada a procesos existentes.
+		Este limite asegura que no se degradara la performance debido a la sobrecarga de procesos.
+		Interviene el planificador de procesos.
+
+	Listo-->Ejecutando:
+		La CPU se libera porque la abandono algun proceso. El planificador de procesos elige
+		al siguiente proceso para ejecutar. El Dispacher se encarga del ultimo paso del
+		Planificador de Procesos, cuando el SO entrega el control al proceso.
+		Cuando es tiempo de selecionar un proceso para su ejecución, el SO elige uno de los
+		procesos en estado Listo. Este es el trabajo del scheduler o dispacher.
+
+	Ejecutando-->Listo:
+		La razon mas comun para esta transición es que en proceso en ejecución ha alcanzado el
+		tiempo maximo permitido para la ejecución ininterrumpida; la mayoria del los SO
+		multiprogramacion imponen este tipo de diciplina. Existen otras causas como el fin
+		de E/S, por ingreso al sistema de un proceso de mayor importancia.
+		Rutina: la rutina de desalojo que corresponda.
+
+	Ejecutando-->bloqueado por E/S:
+		Evento: el proceso solicito realizar una E/S.
+		Rutina: rutina de lanzamiento de E/S.
+		Interviene el controlador de trafico (maneja las tablas)
+
+	Bloqueado por espera de fin de E/S-->Listo:
+		Evento: se produjo una interrupcion por fin de E/S.
+		Rutina: rutina de atencion de interrupciones por fin de E/S.
+
+	Ejecutando-->Terminado:
+		Evento: el proceso finaliza su ejecución por fin normal o anormal.
+		Rutina: planificador de trabajos.
+
+	Bloqueado cinta-->Listo:
+		Un proces se encuentra bloqueado esperando que finalize una operacion de cinta. Esta operacion
+		le corresponde al controlador de trafico
+
+		En todos los cambios de estado interviene el controlador de trafico, es la rutina
+	que se encarga de acceder a la tabla de control de procesos y modificar
+	el estado de los procesos.
+
+<=============================================================================================================>
+3-a)
+	Mas corto primero sin desalojo:
+		El proceso A es el primero en llegar a la cola de listos, luego llega el proceso B. El proceso B pasa a
+			ejecucion antes del proceso A que llego primero. No se trata de FIFO.
+		Tiempo 14; el proceso A finaliza su E/S y C se esta ejecutando, pero no es desalojado para que A pueda
+	ocupar la CPU y asi poder continuar con su E/S, sino que C continua en ejecución (no es desalojado).
+		Tiempo 17; B finaliza su E/S y pasa a la cola de listos, C esta en ejecución y no es desalojado en favor
+	de B que tiene largos tiempos de E/S.
+		Las rafagas de CPU son distintas, no se trata de Round Robin, suponiendo que existe solo una cola con un unico
+		quantum.
+
+	b) transiciónes
+		1- A comenzar-->Listo.
+		2- Listo-->Ejecutando.
+		3- Ejecutando-->Bloqueado E/S.
+		4- Ejecutando-->Bloqueado E/S.
+		5- Bloqueado E/S-->listo.
+		6- Bloqueado E/S-->Listo.
+		7- Ejecutando-->Terminado.
+
+	c) Se introduce un reloj de intervalos.
+		Se agrega un nueva transición: Ejecutando-->Listo.
+		a- Se deteriora la performance. El reloj de intervalos fuerza el desalojo de un proceso que ocupa la CPU, pero no modifica el
+		algoritmo de seleccion de proceso en estado de Listo, con lo que aumenta el tiempo empleado en cambios de contexto, sin un
+		proposito beneficioso.
+			Mejora el tiempo de respuesta pero empeora el turnaround. El schedule se vuelve mas justo, al brindarle el mismo tiempo de
+		ejecucion a los distintos procesos.
+		b- Es beneficioso. El proceso en ejecución se interrumpe luego de un determinado tiempo, y se selecciona otro proceso
+		para continuar la ejecución. Los procesos que requieren largos tiempos de CPU y poca o ningúna operacion de E/S, demoraran
+		mas. Los procesos que requieren mas tiempo de E/S que de CPU seran beneficiados, ya que pasaran menos tiempo en la cola
+		de listos luego de que finalizen las operaciones de E/S, con lo cual podran ocupar la CPU y, en el mejor de los casos,
+		desocupar la CPU antes del que acabe su quantum. Asi pasaran la cola de E/S. De esta forma el tiempo de ocupacion de los
+		perifericos sera mas alta, y los procesos dependientes de E/S finalizaran mas temprano que si no se hubiese introducido el
+		reloj de intervalos. El tiempo de turnaround es menor. Algunos procesos largos altamente dependientes de la CPU, podrian sufrir
+		de inanicion si la entrada de procesos cortos es continua.
+<=============================================================================================================>
+5)	Trabajos cortos acotados por CPU.
+		Trabajos cortos acotados por E/S.
+		Trabajos largos acotados por CPU.
+		Trabajos largos acotados por E/S.
+<=============================================================================================================>
+7)	El quantum en Round Robin se incrementa sin limite. Los procesos se ejecutan y no son interrumpidos por reloj. Liberaran el procesador
+ 		cuando el proceso finalize o cuando se bloquea por E/S. Luego de liberar el procesador se elige el próximo proceso en cola.
+<=============================================================================================================>
+9)	Listo Alta-->Ejecutando.
+		Listo Baja-->Ejecutando.
+		Ejecutando-->Bloqueado E/S Rapido.
+		Ejecutando-->Bloqueado E/S Lento.
+		Bloqueado E/S Rapido-->Listo.
+		Bloqueado E/S Lento-->Listo.
+		Ejecutando-->Finalizado.
+<=============================================================================================================>
+10) Se agregan semaforos al ejercicio 2 para sincronizar los procesos.
+			A) Se incluye un semáforo que controla el uso del canal correspondiente a las unidades de CINTA y otro correspondiente a las
+			unidades de DISCO.
+				Se agregan los siguientes estados:
+					- Bloqueado en espera de cinta, los procesos que no pueden acceder al recurso cinta ya que otro proceso esta haciendo uso de esta.
+					Es necesario tambien tener una cola con los procesos en este estado, con una administracion FIFO.
+					- Bloqueado en espera de disco.
+					Se necesita de una rutina que ponga en espera el proceso que no puede tener acceso al recurso y otra que alerte al proceso en el
+					caso de que el recurso este libre y le corresponda usarlo.
+			B) Se incluye un semáforo que controla la obtención dinámica de espacio en memoria central por parte de los procesos en ejecución.
+				Estados:
+						- Bloqueado en espera de memoria. Un proceso pide memoria al SO y este no se la puede otorgar, es colocado en una cola de espera
+						por el recurso memoria.
+				Rutina:
+						- Rutina para asignar memoria en caso que este disponible.
+						- Rutina para liberar memoria cuando el proceso ya no la necesita.
+			C) 	Se incluye un semáforo que controla el uso de las tablas diseñadas en el ejercicio 1-b) para el caso de que el sistema contase con
+					dos procesadores.
+						Estados:
+							- Bloqueado en espera de acceso a la tabla procesos BCP. Se quiere acceder a una entrada de la tabla que esta siendo usada por otro
+							procesador.
+							- Bloqueado en espera de acceso a la tabla de archivos.
+							- Bloqueado en espera de acceso a la tabla de memoria.
+							- Bloqueado en espera de acceso a la tabla de perifericos.
+						Rutinas:
+							- Rutina para poner en cola de espera.
+							- Rutina para alertar al proceso en espera cuando el recurso se encuentra disponible.
+<=============================================================================================================>
+11)	A)	Diagrama de transición de procesos para una administración del procesador que atiende procesos de cálculos iterativos puros en
+			multiprogramación.
+		B) Politica de administracion del procesador elegida, justificar.
+		C) Rutinas que intervienen en cada transicion e interrupciones que las inician.
+<=============================================================================================================>
+12)	Schedule de prioridades.
+				Los procesos que se activan en caso de robo tiene la prioridad mas alta. Si se esta ejecutando un proceso de menor prioridad, y hay un
+			proceso	de alarma que necesita ser ejecutado, el proceso de menor prioridad es desalojado en favor del proceso de alarma. Es necesario una
+			cola de procesos de alarma, y una cola para procesos generales. Si no hay ningun proceso en cola de alarma, se pasa a ejecuar los procesos
+			que se encuentren en la cola de procesos genreales. Esta cola a su vez se divide en procesos de alta prioridad que utilizan perifericos lentos,
+			y una cola de baja prioridad que usan perifericos rapidos. Cada cola tiene asociado un quantum distinto, x para los de alta, y 2x para los de
+			baja, administrados con Round Robin.
+				Los procesos en cola de alarma se administran con FIFO, sin desalojo por quantum.
+				Tambien se necesita de un semaforo que administre el recurso alarma, con el fin de evitar el uso simultaneo por procesos distintos.
+
+	Estados:
+			- Listo Alarma.
+			- Listo Alta.
+			- Listo Baja.
+			- Bloqueado Alarma.
+
+<=============================================================================================================>
+13)	i)Schedule con multicolas por prioridades con desalojo.
+					Cuando un proceso esta listo para comenzar es enviado a la cola Listos Alta Prioridad. Esta cola se administra
+				con Round Robin asignandole a cada proceso un quantum X. Los procesos que no finalizan dentro de este quantum son
+				desalojados y enviados a la cola Listos Baja Prioridad y asignados un quantum 2X. Los procesos dependientes de
+				perifericos lentos son enviados a la cola de alta prioridad. Procesos dependientes de perifericos rapidos son
+				enviados a la cola
+		ii)	Transicion G Listos Baja Prioridad-->Ejecutando.
+						- No hay procesos en la cola Listo Alta Prioridad. Cuando esta cola se vacia, los procesos de baja prioridad
+						pueden ser ejecutados.
+							En este caso el dispacher carga el contexto del siguiente proceso en la cola de baja prioridad.
+						- Un proceso en cola de baja prioridad envejecio lo suficiente, y es enviado a ejecutarse para evitar su inanicion.
+						Si un proceso de baja prioridad no se ha ejecutado en una luego de un tiempo K, se desaloja el proceso en ejecucion a
+						favor del proceso que ha envejecido.
+							Se genera un interrupcion cuando se llega al tiempo K y se desaloja el proceso en ejecucion.
+							Se llega al tiempo K, cuando el proceso en ejecucion libera el CPU el schedule selecciona el proceso que llego al tiempo K,
+						el dispacher carga su contexto y es enviado a ejecucion.
+<=============================================================================================================>
+14)	a) Monoprogramacion.
+				[0 + X + T.CPU(A+B+C)]
+				El tiempo X se consume en la carga de datos y asignacion de memoria.
+				[0 + X + T.CPU(A+B+C) + P]
+				El tiempo de P se consume en cambios de contexto.
+<==================================================== Semaforos =======================================================>
+
+Semaforos
+	1- Un semaforo es inicializado con un valor entero no negativo.
+	2- La operacion semWait (P) decrementa el valor del semaforo, si el valor se torna
+		negativo, entonces el proceso ejecutando semWait es bloqueado. De otra forma,
+		el proceso continua la ejecución.
+	3- La operacion semSignal (V) incrementa el valor del semaforo. Si el valor resultante es
+		menor o igual a cero, entonces el proceso bloqueado por la senal de la operacion
+		semWait, si es que existe, es desbloqueado.
+
+	En el inicio el semaforo tiene un valor: semaforo >= 0.
+	Si semaforo > 0, entonces el valor de semaforo es igual al numero de procesos que
+		pueden emitir un wait e inmediatamente continuar la ejecución.
+	Si semaforo = 0, ya sea por inicializacion o porque el numero de procesos igual al
+		valor inicial del semaforo emitio un wait, el proceso siguiente en emitir un wait
+		es bloqueado, y el valor del semafor se tora negativo. Cada wait subsecuente
+		adentra al semaforo cada vez mas en el territorio negativo. El valor negativo
+		es igaul al numero de procesos esperando ser desbloqueados. Cada senal desbloquea
+		uno de los procesos cuando el semaforo es negativo.
+
+	down /*
+		  *	Chequea si el valor del semaforo es mayor que 0.
+		  *	Si es mayor que 0, decrementa el valor y continua.
+		  *	Si el valor es 0, el proceso es puesto a dormir sin haber completado
+		  *	por el momento la operacion down.
+		  */
+	up /*
+		* Incrementa el valor del semaforo.
+		* Si uno o mas procesos estaban durmiento en ese semaforo, incapaz de completar
+		* una operacion down anterior, uno de ellos es elegido por el sistema para
+		* que complete la operacion.
+		*/
+Problema filosofos:
+	Porcedimientos:
+		take_fork
+		think
+	Problemas:
+		Todos los filosofos tomar sus tenedores izquierdos, ningúno podra tomar su tenedor derecho.
+		Luego de tomar el tenedor izquierdo chequea si esta disponible el derecho. Si no lo esta libera el izquierdo.
+			Se produce inanicion, el proceso corre indefinidamente pero no se logra ningún progreso.
+		Esperar una cantidad de tiempo al azar luego de fallar en la adquisicion del tenedor derecho. Funciona no siempre.

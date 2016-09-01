@@ -1,0 +1,115 @@
+						<------------------- MEMORIA ------------------->
+							Address Space (espacio de memoria)
+
+			Es el conjunto de direcciones que un proceso puede usar para direccionar memoria.
+		Cadad proceso tiene su propio espacio de memoria, independiente de aquellos que pertencen
+		a otros procesos.
+
+		Registro Base Limite:
+
+			Esta solucion usa una version particularmente simple de relocacion dinamica.
+		Lo que hace es maperar cada espacio de direccion de cada proceso a una parte
+		diferente de memoria fisica. El CPU esta equipado con dos registros especiales base
+		y limite. Los procesos se cargan en memoria de ubicaciones de memoria consecutivas
+		siempre y cuando haya espacio y sin reubicacion durante la carga. Cuando se corre un
+		proceso, el registro base es cargado con la direccion fisica donde el programa
+		comienza en memoria, y el registro limite es cargado con la longitud del programa.
+			Siempre que un proceso haga una referencia a memoria, ya sea para buscar una
+		instruccion o para leer o escribir una palabra, el CPU automaticamente suma el valor
+		base a la direccion generada por el proceso antes de enviar la direccion al bus de memoria.
+		Simultaneamente, chequea si la direccion ofrecida es igual o mayor que el valor del registro
+		limite, en tal caso se generea una (excepcion) error y se aborta el acceso.
+
+						Swapping (intercambiar)
+
+			Consiste en traer cada proceso en su enteridad, correrlo por un tiempo, luego ponerlo en
+		disco. Los procesos desocupados en su mayoria son almacenados en disco, para que no ocupar
+		memoria cuando no estan corriendo.
+			El intercamibio crea multiples agujeros en memoria, es posible combinarlos en un unico
+		agujero mas grande moviendo todos los procesos hacia abajo. Esta tecnica recibe el nombre de
+		compactacion de memoria. No se usa frecuentemente ya que requiere mucho tiempo de CPU.
+
+		Espacio de Direccionamiento (Address Space).
+
+			Es el conjunto de direcciones que un proceso puede usar para direccionar memoria. Cada proceso
+		tiene su propio espacio de direccionamiento, independiente de los espaciosi que pertenecen a
+		otros procesos.
+
+		Memoria Virtual.
+			La idea basica de memoria virtual es que cada programa tiene su propio espacio de direcciones,
+		que se divide en bloques llamados páignas. Cada pagina es un rango de direcciones contiguo. Estas
+		paginas son mapeadas a memoria fisica, pero no todas las paginas tiene que estar en memoria fisica
+		al mismo tiempo para ejecutar el programa. Cuando el programa referencia una parte de su espaci de
+		direcciones que esta en memoria fisica, el hardware realiza el mapeo necesario en el momento. Cuando
+		el programa referencia una parte de su espacio de direccionamiento que no esta en memoria física, el
+		sistema operativo es alertado para que busque la pieza faltante y re-ejecute la instruccion que fallo.
+			En un sentido, la memoira virtual es una generalizacion de la idea de registro base y límite.
+			La memoria virtual funciona bien en sistemas multiprogramacion, con partes de distintos programas
+		en memoria al mismo tiempo. Mientras un programa espera que sus piezas sean enviadas a memoria, el
+		CPU puede continuar con otro proceso.
+
+		Paginacion.
+
+			El espacio de direccion virtual consiste de unidades de tamaño fijo llamadas paginas. El
+		Bloque correspondiente en la memoria fisica se llama frame de pagina (bloque de pagina). Las
+		paginas y los frames de paginas tienen por los general el mismo tamaño. Las transferencias
+		disco-RAM siempre son de paginas enteras.
+
+		Multicolas
+		
+			Multilevel feedback queue:
+				Permite que un proceso se mueva entre colas. La idea es separar procesos de acuerdo a
+			sus a caracteristicas de rafaga de CPU. Si un proceso usa mucho timepo de CPU, sera movido
+			a una cola de menor prioridad. Este esquema deja a los procesos atados por E/S y procesos
+			interactivos en la mas alta prioridad. Ademas, un proceso que espera demasioado en una cola
+			de baja prioridad puede ser movido a una cola de mas alta prioridad. Esta forma de
+			envejecimiento previene la inanicion.
+				Por ejemplo, un scheduler de multicolas con tres colas, de 0 a 2. El scheduler primero
+			ejecuta todos los procesos en la cola 0. Solo cuando la cola 0 esta vacia ejecutara los
+			procesos en la cola 1. Similarmente, los procesos en la cola 2 se ejecutaran solo si las
+			colas 0 y 1 esta vacias. Un proceso que llega por la cola 1 desalojara un proceso en la cola
+			2. Un proceso en la cola 1 sera desalojado por un proceso que llego por la cola 0.
+				Un proceso entrante a la cola de listos es puesto en la cola 0. A un  proceso en cola 0
+			se le otorga un quantum de 8 milisegundos. Si no termina dentro de este lapso de tiempo, sera
+			movido al final de la cola 1. Si la cola 0 esta vacia, se le otorgara un quantum de 16
+			milisegundos al proceso que encabeza la cola 1. Si no completa su ejecucion, sera desalojado y
+			movido a la cola 2. Los procesos en la cola 2 se ejecutan de forma FCFS pero solo son ejecutados
+			cuando las colas 0 y 1 estan vacias.
+
+
+		<--------------------------------Threads-------------------------------->
+		Beneficios:
+			Responsividad: el multihilo en aplicaciones interactivas puede permitir que un programa continue
+				corriendo inclusive si parte de el esta bloqueado o si esta realizando una operacion extensa,
+				por lo tanto aumentando la responsividad para el usuario.
+			Compartir Recursos: Los procesos solo pueden compartir recursos a traves de tecnicas como memoria
+				compartida y pasaje de mensajes. Tales tecnicas deben ser dispuestas explicitamente por el
+				programador. Sin embargo, los hilos comparten la memoria y los recursos del proceso al cual
+				pertenecen por defecto. El beneficio de compartir codigo y datos es que permite que una aplicacion
+				tenga multiples hilos distintos de actividad en el mismo espacio de direcciones.
+			Economia: Asignar memoria y recursos para la creacion de un proceso es costoso. Porque los hilos
+				comparten recursos del procesos al cual pertenecen, es mas economico crear y hacer cambio de
+				contexto de hilos. Medir empiricamente la diferencia en overhead puede ser dificil, pero en
+				general crear y manejar procesos lleva un tiempo significativamente mayor que con hilos.
+			Escalabilidad: Los beneficios del multihilo pueden ser mayores en una arquitectura multiprocesador,
+				donde los hilos pueden correr en paralelo en distintod nucleos de procesamiento. Un proceso de
+				un solo hilo solo pupede correr en un procesador, sin importar cuantos esten disponibles.
+
+		Modelos Multihilo:
+			Muchos a Uno: este modelo mapea varios hilos a nivel usuario a un hilo de kernel. El manejo de threads
+				es hecho por la libreria de threads en espacio de usuario, para que sea eficiente. Sin embargo,
+				todo el proceso se bloqueara si un thread hace un llamado al sistema de bloqueo. Ademas, porque solo
+				un thread puede acceder al kernel por vez, multiples threads no pueden correr en paralelo en un
+				sistema multiprocesador. Pocos sistemas continuan haciendo uso de este modelo por su incapacidad de
+				hacer uso de multiples nucleos de procesamiento.
+
+			Uno a Uno: este modelo mapea cada thread de usuario a un thread de kernel. Provee de mas concurrencia que
+				el modelo Muchos a Uno al permitir que otro thread se ejecute cuando un thread hace un llamado al sistema
+				de bloqueo. Tambien permite que multiples threads corran en paralelo en un sistema multiprocesador. La
+				unica desventaja de este modelo es que crear un thread de usuario requere crear el correspondiente thread
+				de kernel. Porque el overhead de crear el kernel thread puede superar la performance de una aplicacion,
+				la mayoria de las implementaciones de este modelo restringen el numero de threads sooportadad por el sistema.
+				Linux y Windows implementan este modelo.
+
+			Muchos a Muchos: este modelo multiplexea muchas threads de usuario a kernel threads mas chicas o iguales. El
+				numero de kernel threads puede ser especifica a una aplicacion particular o a una mequina en particular.
