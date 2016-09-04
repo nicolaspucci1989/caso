@@ -1,3 +1,23 @@
+1) a) ABCABC
+      A     B     C
+      P(x)  P(H)  P(K)
+      P(x)  P(Y)  P(Y)
+      ...   ...   ...
+      V(Y)  V(X)  V(X)
+      V(Y)  V(B)  V(H)
+
+      X = 2, Y = 0, H = 1, K = 0
+
+    b) ABACABAC
+      A     B     C
+      P(x)  P(H)  P(K)
+            P(Y)  P(Y)
+      ...   ...   ...
+      V(Y)  V(X)  V(X)
+            V(K)  V(H)
+
+      X = 1, Y = 0, H = 1, K = 0
+
 -Secuencia ABBAC...
   A       B       C
   P(m)     P(i)     P(r)
