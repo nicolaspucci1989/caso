@@ -1,0 +1,7 @@
+Implementacion de archivos.
+	- Ubicacion contigua.
+	- Lista-linkeada.
+	- Lista-linkeada usando tabla de memoria.
+	- I-nodos.
+
+Implementacion de directorios.
