@@ -5,3 +5,14 @@ Implementacion de archivos.
 	- I-nodos.
 
 Implementacion de directorios.
+
+-----------------------------------------------------
+
+Sistema de archivo simbolico
+
+	Se busca el archivo por su nombre, pero pueden existir mas de un archivo con el mismo
+nombre. El sistema de archivo simbolico busca en el Directorio de archivo simbolico en nombre
+del archivo y asi encontrar su unico identidificador. Se pasa este identidificador al Sistema
+de archivo basico. 
+	El DAS se mantiene en el periferico de almacenamiento. Se copian a memoria las entradas
+que corresponden a archivos en uso. Esta tabla se denomina Tabla de Nombres de Archivo (TNA).
