@@ -24,20 +24,20 @@ a memoria.
 	La tabla que se mantiene en memoria con las entradas del DAB recibe el nombre de Tabla de
 Archivos Abiertos (TAA). Su informacion es la siguiente.
 
-- Verificacion de control de acceso.
+- Verificacion de control de acceso VCA.
 
 	Se utiliza la entrada de la TAA que contiene la informacion del archivo.
 	Este modulo actua como punto de control entre el SAB y el SAL (sistema de archivo logico).
 Verifica si la accion que se quiere realizar sobre el archivo esta especificada en la TAA.
 	Si no esta el permiso se aborta la accion, sino el control pasa al SAL.
 
-- Sistema de Archivo Logico.
+- Sistema de Archivo Logico SAL.
 	
 	Convierte el pedido de un registro logico a una secuencia de bytes logicos.
 	Teniendo el comienzo de la secuencia de bytes y su longitud, el SAL invoca el modulo de 
 Sistema de Archivo Fisico (SAF).
 
-- Sistema de Archivo Fisico.
+- Sistema de Archivo Fisico SAF.
 	
 	Su funcion es determinar en que bloque fisico se encuentra la secuencia de bytes especifi
 cada por el SAL. Para esto usa la entrada correspondiente en la TAA mas la longitud y direccion
@@ -47,11 +47,7 @@ secuencia de bytes pedidos y se los coloca en el area de buffer de usuario.
 estrategia de asignacion (MEA) para que le proporcione un bloque en memoria secundaria donde
 efectuar la escritura.
 
-- Modulo de Estrategia de Asignacion.
+- Modulo de Estrategia de Asignacion MEA.
 
 	Leva un registro del espacio libre disponible en el almacenamiento secundario. Esta informa
 cion aparecera en la TAA.
-
-
-
-
