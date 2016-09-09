@@ -47,5 +47,11 @@ secuencia de bytes pedidos y se los coloca en el area de buffer de usuario.
 estrategia de asignacion (MEA) para que le proporcione un bloque en memoria secundaria donde
 efectuar la escritura.
 
+- Modulo de Estrategia de Asignacion.
+
+	Leva un registro del espacio libre disponible en el almacenamiento secundario. Esta informa
+cion aparecera en la TAA.
+
+
 
 
