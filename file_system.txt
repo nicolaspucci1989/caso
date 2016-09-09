@@ -35,5 +35,17 @@ Verifica si la accion que se quiere realizar sobre el archivo esta especificada 
 	
 	Convierte el pedido de un registro logico a una secuencia de bytes logicos.
 	Teniendo el comienzo de la secuencia de bytes y su longitud, el SAL invoca el modulo de 
-Sistema de Archivo Fisico.
+Sistema de Archivo Fisico (SAF).
+
+- Sistema de Archivo Fisico.
+	
+	Su funcion es determinar en que bloque fisico se encuentra la secuencia de bytes especifi
+cada por el SAL. Para esto usa la entrada correspondiente en la TAA mas la longitud y direccion
+	Se lee el bloque y se lo coloca en el buffer correspondiente, se extrae de este buffer la
+secuencia de bytes pedidos y se los coloca en el area de buffer de usuario.
+	Si se quiere escribir un bloque que no esta asignado, entonces el SAF invoca al Modulo de
+estrategia de asignacion (MEA) para que le proporcione un bloque en memoria secundaria donde
+efectuar la escritura.
+
+
 
