@@ -32,4 +32,8 @@ Verifica si la accion que se quiere realizar sobre el archivo esta especificada 
 	Si no esta el permiso se aborta la accion, sino el control pasa al SAL.
 
 - Sistema de Archivo Logico.
+	
+	Convierte el pedido de un registro logico a una secuencia de bytes logicos.
+	Teniendo el comienzo de la secuencia de bytes y su longitud, el SAL invoca el modulo de 
+Sistema de Archivo Fisico.
 
