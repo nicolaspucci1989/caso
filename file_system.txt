@@ -51,3 +51,18 @@ efectuar la escritura.
 
 	Leva un registro del espacio libre disponible en el almacenamiento secundario. Esta informa
 cion aparecera en la TAA.
+
+---------------------------------------------------------------------
+
+							Estructuras de control de acceso.
+
+-Lista de control de acceso.
+
+	A cada archivo en el sistema se le asocia una lista de permisos. Se especifica para cada
+usuario las acciones que pueden realizar sobre el archvio.
+
+- Lista de cotrol de usuario.
+
+	Por cada usuario existe una lista de los archivos a los cuales puede acceder y que acciones
+puede realizar.
+		
