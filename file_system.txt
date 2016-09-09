@@ -8,11 +8,28 @@ Implementacion de directorios.
 
 -----------------------------------------------------
 
-Sistema de archivo simbolico
-
+- Sistema de archivo simbolico SAS.
+ 
 	Se busca el archivo por su nombre, pero pueden existir mas de un archivo con el mismo
 nombre. El sistema de archivo simbolico busca en el Directorio de archivo simbolico en nombre
 del archivo y asi encontrar su unico identidificador. Se pasa este identidificador al Sistema
 de archivo basico. 
 	El DAS se mantiene en el periferico de almacenamiento. Se copian a memoria las entradas
 que corresponden a archivos en uso. Esta tabla se denomina Tabla de Nombres de Archivo (TNA).
+
+- Sistema de archivo basico SAB.
+
+	Con el ID que le pasa el SAS puede localizar el archivo en el DAB y copiar la entrada
+a memoria.
+	La tabla que se mantiene en memoria con las entradas del DAB recibe el nombre de Tabla de
+Archivos Abiertos (TAA). Su informacion es la siguiente.
+
+- Verificacion de control de acceso.
+
+	Se utiliza la entrada de la TAA que contiene la informacion del archivo.
+	Este modulo actua como punto de control entre el SAB y el SAL (sistema de archivo logico).
+Verifica si la accion que se quiere realizar sobre el archivo esta especificada en la TAA.
+	Si no esta el permiso se aborta la accion, sino el control pasa al SAL.
+
+- Sistema de Archivo Logico.
+
