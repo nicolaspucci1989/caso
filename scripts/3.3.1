@@ -1,13 +1,12 @@
 #!/bin/bash
 
-hora=1700
-flag=1
+tiempo=$1
+hora=$2
 
 while true;do
-		sleep 5m && echo "HOLA"
-		if [ $(date +%H%M) -eq $hora ] && [ $flag -eq 1 ] 
+		sleep $tiempo && echo "HOLA"
+		if [ $(date +%H%M) -eq $hora ] 
 			then
 				echo "Hora seleccionada"
-				flag=0
 		fi
 done
