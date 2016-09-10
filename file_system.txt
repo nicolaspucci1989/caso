@@ -10,10 +10,10 @@ Implementacion de directorios.
 
 - Sistema de archivo simbolico SAS.
  
-	Se busca el archivo por su nombre, pero pueden existir mas de un archivo con el mismo
+	Se busca el archivo por su nombre, pero puede existir mas de un archivo con el mismo
 nombre. El sistema de archivo simbolico busca en el Directorio de archivo simbolico en nombre
-del archivo y asi encontrar su unico identidificador. Se pasa este identidificador al Sistema
-de archivo basico. 
+del archivo y asi encuentra su unico identificador. Se pasa este identificador al Sistema
+de Archivo Basico. 
 	El DAS se mantiene en el periferico de almacenamiento. Se copian a memoria las entradas
 que corresponden a archivos en uso. Esta tabla se denomina Tabla de Nombres de Archivo (TNA).
 
