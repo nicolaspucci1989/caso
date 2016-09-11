@@ -37,4 +37,8 @@ Paginada por demanda
 su ejecucion.
 	Las paginas de un programa se van cargando a medida que se necesitan. En la TDP 
 se agrega un bit que indica si la pagina referenciada esta en memoria o no.
+	
+	Tablas necesacias:
+		Tabla de distribucion de pagina (TDP), una por cada proceso (esta tabla es
+	apuntada por el BCP).
 		
