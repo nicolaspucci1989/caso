@@ -1,0 +1,40 @@
+6)En un esquema de memoria paginada sin memoria virtual se ejecutan tres
+programas A, B, C con longitudes de 2K, 1.5K, y 3K caracteres. La longitud
+de la pagina es de 0.5K caracteres.
+  a) Cual es la cantidad maxima de paginas que puede tener un programa si las
+instrucciones tienen direccioens de 16 bits.
+  Direccionamiento de 16 bits, de 0 a 2^(16) - 1 = 64K.
+  64K / 0.5K = 128 paginas. Un programa puede tener 128 paginas.
+
+  b) Disene la base de datos del sistema suponiendo que la maquina tiene una
+memoira de 64K.
+  - TDB-->"Libro de reserva", que bloques son usados y cuales no. Cantidad de
+  bloques de memoria real (128 bloques, 128 entradas).
+  - TDP-->"Quienes van a cual habitacion". 128 entradas, la cantidad de paginas
+  en un programa.
+    TDP A     TDP B      TDP C
+      0 0      0 1        0 2
+      1 3      1 5        1 7
+      2 4      2 6        2 8
+      3 9                 3 10
+                          4 11
+                          5 12
+
+    TDB
+      0    A    0
+      1    B    0
+      2    C    0
+      3    A    1
+      4    A    2
+      5    B    1
+      6
+      7
+      8
+      9
+      10
+      11
+      12
+      13
+      .
+      .
+      .127
