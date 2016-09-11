@@ -22,4 +22,19 @@ la cantidad de paginas que puede tener un proceso.
 cache.
 
 	- Memoria virtual
+		
+		Espacio de direccionamiento de un sistema: capacidad de direccionamiento del
+	sistema, hasta que direccion puede llegar.
+
+		Espacio de direccionamiento de un proceso: capacidad de direccionamiento del
+	proceso, puede generar o pedir direcciones de 0 a nn.
 	
+		La memoria virtual simula poseer una cantidad de memoria mayor a la existente
+
+Paginada por demanda
+	
+	Un programa se encuentra en una biblioteca (disco), desde alli se lo invoca para
+su ejecucion.
+	Las paginas de un programa se van cargando a medida que se necesitan. En la TDP 
+se agrega un bit que indica si la pagina referenciada esta en memoria o no.
+		
