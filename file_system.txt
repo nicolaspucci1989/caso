@@ -56,13 +56,22 @@ cion aparecera en la TAA.
 
 							Estructuras de control de acceso.
 
--Lista de control de acceso.
+- Lista de control de acceso LCA.
 
 	A cada archivo en el sistema se le asocia una lista de permisos. Se especifica para cada
 usuario las acciones que pueden realizar sobre el archvio.
 
-- Lista de cotrol de usuario.
+- Lista de cotrol de usuario LCU.
 
 	Por cada usuario existe una lista de los archivos a los cuales puede acceder y que acciones
-puede realizar.
+puede realizar. Un archivo puede ser visto con diferentes nombres por varios usuarios.
+
+
+- Comparacion LCA LCU. 
+	Borrar archivo.
+		LCA: se elimina la entrada correspondiente en el catalogo del Owner. Luego se
+	eliminan las entradas del archivo y su LCA en el DAB.
+		LCU: Inconveniente, no se sabe que otros usuarios apuntan al archivo. Es 
+	necesario recorrer la LCU de todos los usuarios para ver quienes tiene una entrada
+	correspondiente al archivo.
 		
