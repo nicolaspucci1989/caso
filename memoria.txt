@@ -1,0 +1,44 @@
+Memoria paginada.
+	
+	La memoria se divide en bloues de igual tamano. Cada bloque contendra una pagina
+del programa. Las paginas se ubican en memoria, pueden estar contguas o no.
+	Cuando se carga le programa en memoria, se crea una Tabla de Distribucion de 
+Pagina (TDP), que esta apuntada desde el Bloque de Control de Proceso (BCP).
+
+	- Calculo de la indireccion.
+
+		Las direcciones logicas estan compuestas de dos partes:
+			
+			Numero de pagina | Desplazamiento dentro de la pagina
+
+		El numero de pagina es tomado por el direct address translator (DAT), este
+		accede a la TDP y obtiene el numero de bloque que corresponde a la pagina.
+
+			Numero de bloque | Desplazamiento dentro de la pagina
+
+	Es posible cargar la TPD en registros del procesador, pero es costoso y limita
+la cantidad de paginas que puede tener un proceso.
+	Una solucion mas economia es cargar toda o una porcion de la tabla en memoria
+cache.
+
+	- Memoria virtual
+		
+		Espacio de direccionamiento de un sistema: capacidad de direccionamiento del
+	sistema, hasta que direccion puede llegar.
+
+		Espacio de direccionamiento de un proceso: capacidad de direccionamiento del
+	proceso, puede generar o pedir direcciones de 0 a nn.
+	
+		La memoria virtual simula poseer una cantidad de memoria mayor a la existente
+
+Paginada por demanda
+	
+	Un programa se encuentra en una biblioteca (disco), desde alli se lo invoca para
+su ejecucion.
+	Las paginas de un programa se van cargando a medida que se necesitan. En la TDP 
+se agrega un bit que indica si la pagina referenciada esta en memoria o no.
+	
+	Tablas necesacias:
+		Tabla de distribucion de pagina (TDP), una por cada proceso (esta tabla es
+	apuntada por el BCP).
+		
