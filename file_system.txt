@@ -115,4 +115,24 @@ puede realizar. Un archivo puede ser visto con diferentes nombres por varios usu
 
 - DELETE
 
+---------------------------------------------------------------------
+					
+					Calculo de la direcicon logica	
 
+-Formato fijo
+
+	- Acceso secuencial.
+	- Acceso directo.
+
+-Formato variable.
+
+	- Acceso secuencial.
+	- Acceso directo.
+
+
+---------------------------------------------------------------------
+		
+			Sistema de archivo fisico (SAF)
+
+Numero de bloque relativo (NBR) = [DBL / longitud de bloque] 
+Direccion fisica (DF) = NBR + dir archivo 
