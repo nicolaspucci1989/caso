@@ -56,6 +56,18 @@ efectuar la escritura.
 cion aparecera en la TAA.
 
 ---------------------------------------------------------------------
+							Estructuras de directorios
+
+- Direcorios de un solo nivel.
+	
+	Cada entrada en la tabla de directorio de archivo basico apunta a una estructura que mapea 
+todos los bloques del archivo real en disco.
+
+- Directorios de varios niveles.
+	
+	Para acceder a un archivo es necesario recorrer los n niveles que apuntan a dicho archivo.
+
+---------------------------------------------------------------------
 
 							Estructuras de control de acceso.
 
