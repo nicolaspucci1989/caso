@@ -24,6 +24,9 @@ a memoria.
 	La tabla que se mantiene en memoria con las entradas del DAB recibe el nombre de Tabla de
 Archivos Abiertos (TAA). Su informacion es la siguiente.
 
+| IDENTIFICACION | LONG REG LOGICO | LONG REG FISICO | FORMATO | ORGANIZACION | PERMISOS 
+| CONCURRENCIA | LISTA DE PROCESOS QUE LO ESTAN USANDO |
+
 - Verificacion de control de acceso VCA.
 
 	Se utiliza la entrada de la TAA que contiene la informacion del archivo.
