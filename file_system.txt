@@ -90,3 +90,29 @@ puede realizar. Un archivo puede ser visto con diferentes nombres por varios usu
 	necesario recorrer la LCU de todos los usuarios para ver quienes tiene una entrada
 	correspondiente al archivo.
 		
+---------------------------------------------------------------------
+						Operaciones de instrucciones de E/S
+
+- OPEN
+	
+	Un archivo, antes de ser abierto debe ser asignado
+		La asignacion se realiza de la siguiente manera:
+			- Se genera la entrada para el dispositivo apuntada desde el BCP.
+			- Se genera la entrada para el archivo apuntada desde el BCP.
+			- Se genera una entrada en la TNA.
+
+	- OPEN sin ASSIGN
+		
+		Con la informacion ya presente en la TNA, se busca el archivo en la TAA.
+		Si se encuentra entonces: el archivo estaba siendo usado por otro proceso y se controlan los permisos y concurrenci
+		segun los campos respectivos en la TAA, luego se asocia el dispositivo y el archivo al proceso.
+		Si no se encuentra entonces: se debe generar una entrada en la TAA accediendo al DAB en el disco y se copia la entrada
+		correspondiente al archivo en memoria
+
+	- OPEN con asignacion de dispositivo
+
+- CLOSE
+
+- DELETE
+
+
