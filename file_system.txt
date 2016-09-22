@@ -181,3 +181,9 @@ TAA.
 se quiere realizar sobre el archivo esta explicitada en la TAA.
 	Si no esta permitida el pedido es abortado, si esta permitida se pasa el control al modulo
 de SAL (sistema de archivos logico).
+	CALL VCA(ARCH1,...)
+
+-SAF
+	Con la informacion proporcionada por la TAA y la direccion del bloque logico (dbl), y
+la longitud de la secuencia de bytes logicos (lsb) pasados por el SAL. 
+	Se lee el bloque y se lo coloca en un buffer de memoria predifinido.	
