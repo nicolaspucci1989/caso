@@ -136,3 +136,14 @@ puede realizar. Un archivo puede ser visto con diferentes nombres por varios usu
 
 Numero de bloque relativo (NBR) = [DBL / longitud de bloque] 
 Direccion fisica (DF) = NBR + dir archivo 
+
+
+---------------------------------------------------------------------
+					Practica fs
+
+1)a)
+- Solicitud de creacion de archivo
+	CREAR(arch1, 50 pistas, paquete 1)
+	El modulo de SAS crea una etrada en el DAS: CALL SAS (CREAR, ...)
+	Se le asigna un ID al archivo. Se crea una entrada en el TNA
+	El modulo de SAB crea una nueva entrada en la TAA
