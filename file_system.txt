@@ -139,6 +139,24 @@ Direccion fisica (DF) = NBR + dir archivo
 
 
 ---------------------------------------------------------------------
+- Pista				
+	Una pista es una porcion del disco que pasa bajo una cabeza unica estacionaria durante
+la rotacion del disco. Una pista esta dividida en segmentos de sectores, que es la unidad
+basica de almacenamiento.
+
+- Cilindro
+	Un cilindro esta compuesto de un conjunto de pistas que estan bajo todas las cabezas
+(en platillos distintos) en una unica posicion. Cada cilindro es equidistante del centro del
+disco.
+
+El numero de sectores por pista varia con el radio de la pista en el platillo. Las pistas mas
+exteriores son mas largas y pueden contener mas sectores que las interiores. Estas pistas mas
+externas giran mas rapido bajo la cabeza que las interiores, porque mientras que la velocidad
+angular permanece igual, la circunferencia mas lagra resulta en mas sectores girando en el
+mismo periodo de tiempo para las pistas externas. Los bloques de discos son numerados 
+empezando en la psita mas externa, asi que es una buena practica poner los datos que se espera
+seran accedidos mas frecuentemente en la particion, o porcion 0.
+---------------------------------------------------------------------
 					Practica fs
 
 1)a)
