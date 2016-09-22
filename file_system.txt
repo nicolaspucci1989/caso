@@ -187,3 +187,8 @@ de SAL (sistema de archivos logico).
 	Con la informacion proporcionada por la TAA y la direccion del bloque logico (dbl), y
 la longitud de la secuencia de bytes logicos (lsb) pasados por el SAL. 
 	Se lee el bloque y se lo coloca en un buffer de memoria predifinido.	
+
+-MEP
+	Convierte la el numero de bloque fisico al formato adecuado para que el periferico pueda
+comprenderlo. Ademas inicializa los comandos de E/S adecuados para el periferico sobre el
+cual se realizara la operacion.
