@@ -173,3 +173,11 @@ seran accedidos mas frecuentemente en la particion, o porcion 0.
 pasa la informacion al SAB, sino busca en el DAS la entrada que pertenece al archivo buscado.
 
 -SAB
+	Busca la entrada correspondiente al ID en el DAB y copia la informacion a memoria en la
+TAA.
+
+-VCA 
+	Con la id del archivo y la informacion aportada en la TAA, se verifica si la funcion que
+se quiere realizar sobre el archivo esta explicitada en la TAA.
+	Si no esta permitida el pedido es abortado, si esta permitida se pasa el control al modulo
+de SAL (sistema de archivos logico).
