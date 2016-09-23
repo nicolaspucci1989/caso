@@ -9,11 +9,11 @@ Implementacion de directorios.
 -----------------------------------------------------
 
 - Sistema de archivo simbolico SAS.
- 
+
 	Se busca el archivo por su nombre, pero puede existir mas de un archivo con el mismo
 nombre. El sistema de archivo simbolico busca en el Directorio de archivo simbolico en nombre
 del archivo y asi encuentra su unico identificador. Se pasa este identificador al Sistema
-de Archivo Basico. 
+de Archivo Basico.
 	El DAS se mantiene en el periferico de almacenamiento. Se copian a memoria las entradas
 que corresponden a archivos en uso. Esta tabla se denomina Tabla de Nombres de Archivo (TNA).
 
@@ -24,7 +24,7 @@ a memoria.
 	La tabla que se mantiene en memoria con las entradas del DAB recibe el nombre de Tabla de
 Archivos Abiertos (TAA). Su informacion es la siguiente.
 
-| IDENTIFICACION | LONG REG LOGICO | LONG REG FISICO | FORMATO | ORGANIZACION | PERMISOS 
+| IDENTIFICACION | LONG REG LOGICO | LONG REG FISICO | FORMATO | ORGANIZACION | PERMISOS
 | CONCURRENCIA | LISTA DE PROCESOS QUE LO ESTAN USANDO |
 
 - Verificacion de control de acceso VCA.
@@ -35,13 +35,13 @@ Verifica si la accion que se quiere realizar sobre el archivo esta especificada 
 	Si no esta el permiso se aborta la accion, sino el control pasa al SAL.
 
 - Sistema de Archivo Logico SAL.
-	
+
 	Convierte el pedido de un registro logico a una secuencia de bytes logicos.
-	Teniendo el comienzo de la secuencia de bytes y su longitud, el SAL invoca el modulo de 
+	Teniendo el comienzo de la secuencia de bytes y su longitud, el SAL invoca el modulo de
 Sistema de Archivo Fisico (SAF).
 
 - Sistema de Archivo Fisico SAF.
-	
+
 	Su funcion es determinar en que bloque fisico se encuentra la secuencia de bytes especifi
 cada por el SAL. Para esto usa la entrada correspondiente en la TAA mas la longitud y direccion
 	Se lee el bloque y se lo coloca en el buffer correspondiente, se extrae de este buffer la
@@ -59,12 +59,12 @@ cion aparecera en la TAA.
 							Estructuras de directorios
 
 - Direcorios de un solo nivel.
-	
-	Cada entrada en la tabla de directorio de archivo basico apunta a una estructura que mapea 
+
+	Cada entrada en la tabla de directorio de archivo basico apunta a una estructura que mapea
 todos los bloques del archivo real en disco.
 
 - Directorios de varios niveles.
-	
+
 	Para acceder a un archivo es necesario recorrer los n niveles que apuntan a dicho archivo.
 
 ---------------------------------------------------------------------
@@ -82,19 +82,19 @@ usuario las acciones que pueden realizar sobre el archvio.
 puede realizar. Un archivo puede ser visto con diferentes nombres por varios usuarios.
 
 
-- Comparacion LCA LCU. 
+- Comparacion LCA LCU.
 	Borrar archivo.
 		LCA: se elimina la entrada correspondiente en el catalogo del Owner. Luego se
 	eliminan las entradas del archivo y su LCA en el DAB.
-		LCU: Inconveniente, no se sabe que otros usuarios apuntan al archivo. Es 
+		LCU: Inconveniente, no se sabe que otros usuarios apuntan al archivo. Es
 	necesario recorrer la LCU de todos los usuarios para ver quienes tiene una entrada
 	correspondiente al archivo.
-		
+
 ---------------------------------------------------------------------
 						Operaciones de instrucciones de E/S
 
 - OPEN
-	
+
 	Un archivo, antes de ser abierto debe ser asignado
 		La asignacion se realiza de la siguiente manera:
 			- Se genera la entrada para el dispositivo apuntada desde el BCP.
@@ -102,7 +102,7 @@ puede realizar. Un archivo puede ser visto con diferentes nombres por varios usu
 			- Se genera una entrada en la TNA.
 
 	- OPEN sin ASSIGN
-		
+
 		Con la informacion ya presente en la TNA, se busca el archivo en la TAA.
 		Si se encuentra entonces: el archivo estaba siendo usado por otro proceso y se controlan los permisos y concurrenci
 		segun los campos respectivos en la TAA, luego se asocia el dispositivo y el archivo al proceso.
@@ -116,8 +116,8 @@ puede realizar. Un archivo puede ser visto con diferentes nombres por varios usu
 - DELETE
 
 ---------------------------------------------------------------------
-					
-					Calculo de la direcicon logica	
+
+					Calculo de la direcicon logica
 
 -Formato fijo
 
@@ -131,15 +131,15 @@ puede realizar. Un archivo puede ser visto con diferentes nombres por varios usu
 
 
 ---------------------------------------------------------------------
-		
+
 			Sistema de archivo fisico (SAF)
 
-Numero de bloque relativo (NBR) = [DBL / longitud de bloque] 
-Direccion fisica (DF) = NBR + dir archivo 
+Numero de bloque relativo (NBR) = [DBL / longitud de bloque]
+Direccion fisica (DF) = NBR + dir archivo
 
 
 ---------------------------------------------------------------------
-- Pista				
+- Pista
 	Una pista es una porcion del disco que pasa bajo una cabeza unica estacionaria durante
 la rotacion del disco. Una pista esta dividida en segmentos de sectores, que es la unidad
 basica de almacenamiento.
@@ -153,7 +153,7 @@ El numero de sectores por pista varia con el radio de la pista en el platillo. L
 exteriores son mas largas y pueden contener mas sectores que las interiores. Estas pistas mas
 externas giran mas rapido bajo la cabeza que las interiores, porque mientras que la velocidad
 angular permanece igual, la circunferencia mas lagra resulta en mas sectores girando en el
-mismo periodo de tiempo para las pistas externas. Los bloques de discos son numerados 
+mismo periodo de tiempo para las pistas externas. Los bloques de discos son numerados
 empezando en la psita mas externa, asi que es una buena practica poner los datos que se espera
 seran accedidos mas frecuentemente en la particion, o porcion 0.
 ---------------------------------------------------------------------
@@ -172,21 +172,27 @@ seran accedidos mas frecuentemente en la particion, o porcion 0.
 	El SAS busca en la TNA la entrada correspondiente al archivo requerido, si lo encuentra
 pasa la informacion al SAB, sino busca en el DAS la entrada que pertenece al archivo buscado.
 
+	CALL SAS (READ, ARCH1, registro logico a leer, dir de buffer destino)
+	^ devuelve la ID del archivo.
+
 -SAB
 	Busca la entrada correspondiente al ID en el DAB y copia la informacion a memoria en la
 TAA.
 
--VCA 
+	CALL SAB(READ, ARCH1, ID, reg logico a leer, dir buffer destino)
+
+-VCA
 	Con la id del archivo y la informacion aportada en la TAA, se verifica si la funcion que
 se quiere realizar sobre el archivo esta explicitada en la TAA.
 	Si no esta permitida el pedido es abortado, si esta permitida se pasa el control al modulo
 de SAL (sistema de archivos logico).
-	CALL VCA(ARCH1,...)
+	CALL VCA(READ, ARCH1, entrada del TAA correspondieten al archivo abierto, reg logico a leer,
+					dir de buffer destino)
 
 -SAF
 	Con la informacion proporcionada por la TAA y la direccion del bloque logico (dbl), y
-la longitud de la secuencia de bytes logicos (lsb) pasados por el SAL. 
-	Se lee el bloque y se lo coloca en un buffer de memoria predifinido.	
+la longitud de la secuencia de bytes logicos (lsb) pasados por el SAL.
+	Se lee el bloque y se lo coloca en un buffer de memoria predifinido.
 
 -MEP
 	Convierte la el numero de bloque fisico al formato adecuado para que el periferico pueda
