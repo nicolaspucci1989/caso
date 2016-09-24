@@ -211,3 +211,19 @@ cual se realizara la operacion.
 			Lista de control de acceso. A cada archivo en el sistema se le asocia una lista de
 		permisos, en esta lista se especifican las acciones que cada usuario puede realizar
 		sobre el archivo.
+
+14)
+	a) El modulo que determina si se realiza una E/S fisica es el SAF. Falso
+		El MEP se encarga de los comandos de E/S, el SAF determina el bloque fisico donde se encuentra
+	la informacion requerida pasada por el SAL.
+
+	b) El modulo que sabe/controla si un archivo esta siendo usado concurrentemente es el VCA. Falso
+		El VCA verifica que la accion a realizar sobre el archivo este explicitada en la TAA.
+
+	c) Si un archivo ya esta abierto y se lo desea acceder entonces no interviene el SAS. Falso
+		Si un archivo ya esta abierto sus entradas estan presentes en la TAA y la TNA.
+		Como el archivo ya fue accedido no es necesario buscar su ID en el directorio basico, pero
+	al acceder al archivo por su nombre y no por su ID, es necesario buscar su entrada en el DAS,
+	operacion que esta a cargo del SAS. En tal caso no es necesario acceder al DAS en busca de la
+	entrada correspondiente al archivo en cuestion, ya que su entrada esta presente en la TNA
+	ubicada en memoria.
