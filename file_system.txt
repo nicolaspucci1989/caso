@@ -205,3 +205,9 @@ la longitud de la secuencia de bytes logicos (lsb) pasados por el SAL.
 	Convierte la el numero de bloque fisico al formato adecuado para que el periferico pueda
 comprenderlo. Ademas inicializa los comandos de E/S adecuados para el periferico sobre el
 cual se realizara la operacion.
+
+10)
+	b) Control de acceso
+			Lista de control de acceso. A cada archivo en el sistema se le asocia una lista de
+		permisos, en esta lista se especifican las acciones que cada usuario puede realizar
+		sobre el archivo.
