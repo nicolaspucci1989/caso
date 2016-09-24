@@ -226,3 +226,7 @@ cual se realizara la operacion.
 		al archivo, y asi obtener su ID. Esta operacion esta a cargo del SAS.
 		En tal caso no es necesario acceder al DAS en busca de la entrada correspondiente al archivo
 		en cuestion, ya que su entrada esta presente en la TNA ubicada en memoria.
+
+	d) Un CLOSE no genera E/S de datos del archivo si este archivo fue abierto en modod lectura. Falso
+	Si bien no se modifica el contenido del archivo, la informacion correspondiente tiempo del ultimo
+	acceso si debe ser actualizada.
