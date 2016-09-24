@@ -161,10 +161,16 @@ seran accedidos mas frecuentemente en la particion, o porcion 0.
 
 1)a)
 - Solicitud de creacion de archivo
-	CREAR(arch1, 50 pistas, paquete 1)
+	i) Archivo ARCH1 en paquete PAQ1 de 50 pistas, usuario LPR lee y graba.
+	CREAR(ARCH1, PAQ1, 50, {LPR} [L][G])
 	El modulo de SAS crea una etrada en el DAS: CALL SAS (CREAR, ...)
 	Se le asigna un ID al archivo. Se crea una entrada en el TNA
 	El modulo de SAB crea una nueva entrada en la TAA
+
+	ii) Archivo ARCH2 de 100 pistas, en paquete ABCD, leido por todos y grabado por LPR
+	CREAR(ARCH2, ABCD, 100, LPR [L][G], TODOS [L])
+
+	iii) CREAR(ARCH2, ABCD, 100, LPR [L][G], TODOS [L] INSPEC [G])
 
 3) Pasos necesarios para lectura de arhcivo.
 
@@ -186,9 +192,9 @@ TAA.
 se quiere realizar sobre el archivo esta explicitada en la TAA.
 	Si no esta permitida el pedido es abortado, si esta permitida se pasa el control al modulo
 de SAL (sistema de archivos logico).
-	CALL VCA (READ, ARCH1, entrada del TAA correspondieten al archivo abierto, 
+	CALL VCA (READ, ARCH1, entrada del TAA correspondieten al archivo abierto,
 				reg logico a leer, dir de buffer destino)
-					
+
 
 -SAF
 	Con la informacion proporcionada por la TAA y la direccion del bloque logico (dbl), y
