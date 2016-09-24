@@ -222,8 +222,5 @@ cual se realizara la operacion.
 
 	c) Si un archivo ya esta abierto y se lo desea acceder entonces no interviene el SAS. Falso
 		Si un archivo ya esta abierto sus entradas estan presentes en la TAA y la TNA.
-		Como el archivo ya fue accedido no es necesario buscar su ID en el directorio basico, pero
-	al acceder al archivo por su nombre y no por su ID, es necesario buscar su entrada en el DAS,
-	operacion que esta a cargo del SAS. En tal caso no es necesario acceder al DAS en busca de la
-	entrada correspondiente al archivo en cuestion, ya que su entrada esta presente en la TNA
-	ubicada en memoria.
+		En tal caso no es necesario acceder al DAS en busca de la entrada correspondiente al archivo
+		en cuestion, ya que su entrada esta presente en la TNA ubicada en memoria.
