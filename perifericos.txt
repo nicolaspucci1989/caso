@@ -1,0 +1,52 @@
+- Tipos de Canales
+	
+	Selector: permanece conectado al periferco desde el inicio del programa hasta el final. Sireve a un dispositivo a la vez
+
+	Multiplexor: Se comparte entre varios programas de procesadores de E/S, puede desconectarse del periferico.
+
+- Tipos de perifericos
+	
+	Exclusivos	| Compartidos
+
+- Tecnicas de administracion y asignacion de perifericos
+
+	1) Dedicados.
+	2) Compartidos.
+	3) Virtuales.
+
+- Politicas de asignacion para perifericos dedicados.
+
+- Asignacion parcial y total de perifericos dedicados.
+
+- Politicas de asignacion para perifericos comparitdos.
+
+- Rutinas del sistema.
+
+	- Controlador de trafico de E/S
+		Estado de los dispositivos.
+		Posibilidad de una operacion de E/S y caminos alternativos.
+	- Planificador de E/S
+		Que proceso toma el recurso. 
+		Orden de asignacion a los procesos.
+	- Manipulador de perifericos
+		Arma el programa del procesador de E/S.
+		Emite la instruccion de arranque de E/S.
+		Manejar erroes del dispositivo.
+		Planifica el acceso de acuerdo al periferico.
+
+- Como interactuan las rutinas
+	Se debe completar la E/S solicitada por el proceso. Se necesita: la ruta de transferencia desde o hacia el periferico o memoria.
+	Como se adquiere la ruta:
+		Periferico-->Unidad de Control-->Canal
+	Con el periferoco destino, inforkmacion a transferiri y el tipo de operacion, se pasa la informacion a la administracion de perifericos.
+
+	1) Manipulador de perifericos.
+		Con los datos recibidos construye el programa de canal, pero desconoce la tura a utilizar.
+
+	2) Controlador de trafico.
+		Coloca al pedido en en bloque de control del periferico en la lista de procesos en espera del periferico.
+
+- Algoritmos de planificacion de E/S
+
+	- Bloqueo
+	- Buffering
