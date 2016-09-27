@@ -1,3 +1,11 @@
+==========================================================
+bits	bit		Byte	KiloByte	MegaByte	GigaByte
+2^0		1		0		0			0			0	
+2^3		8		1		0			0			0
+2^13    8192	1024	1			0			0
+2^23			2^20	1024		1			0	
+2^33			2^30	2^20		1024		1
+==========================================================
 Memoria paginada.
 	
 	La memoria se divide en bloues de igual tamano. Cada bloque contendra una pagina
