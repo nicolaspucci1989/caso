@@ -69,6 +69,7 @@ memoira de 64K.
 		Nuevo software necesario: tablas de pagina por programa y las rutinas para el manejo de dichas tablas.
 
 	- Segmentacion.
-		Problema resuelto:
+		Problema resuelto: permite referenciar segmentos compartidos por varios usuarios y no duplicar innecesariamente 
+			copias del mismo en memoria real.
 		Nuevo hardware necesario:
-		Nuevo software necesario:
+		Nuevo software necesario:  
