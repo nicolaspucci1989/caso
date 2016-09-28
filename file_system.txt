@@ -230,3 +230,12 @@ cual se realizara la operacion.
 	d) Un CLOSE no genera E/S de datos del archivo si este archivo fue abierto en modod lectura. Falso
 	Si bien no se modifica el contenido del archivo, la informacion correspondiente tiempo del ultimo
 	acceso si debe ser actualizada.
+
+	f) El MEA solo interviene cuando es necesario espacio para el dato que se intenta grabar para el archivo. Verdadero
+
+	g) Si la informacion de la TAA fue alterada durante el uso del archivo es necesario regrabarla en el DAB cuando el 
+		archivo se cierra. Verdadero.
+	
+	h) Una vez que el archivo ya esta abierto se lo accede desde el puntero del BCP. Verdadero.
+		
+	i) Verdadero.
