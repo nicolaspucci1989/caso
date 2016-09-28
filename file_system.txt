@@ -238,4 +238,6 @@ cual se realizara la operacion.
 	
 	h) Una vez que el archivo ya esta abierto se lo accede desde el puntero del BCP. Verdadero.
 		
-	i) Verdadero.
+	i) Si un proceso declara que quiere usar un archivo para leer y subitamente ejecuta un WRITE sobre este archivo
+		el VCA intercepta el WRITE y notifica un mensaje de error o cancela al proceso. Falso.
+		Solo aborta el proceso.
