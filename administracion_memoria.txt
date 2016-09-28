@@ -39,3 +39,36 @@ memoira de 64K.
       .
       .
 	  127
+
+21)
+	- Simple contigua.
+		Problema resuelto: reduce la complejidad para el programador, la memoria aparece al programa como una unico
+			extension contigua de direcciones, compartida solo por el programa y el sistema. 
+			Hace posible que multiples programas esten presentes en memoria sin necesidad de coordinar las direcciones
+			usadas por otros programas. Cada programa tiene su espacio de direcciones gracias a los registros base y
+			limite.
+			No hay fragmentacion interna, pero si externa.
+		Nuevo hardware necesario: se necesita un nuevo registro limite o base
+		Nuevo software necesario: se necesitan rutinas de atencion a las interrupciones generadas por la invacion
+			del espacio del so, o perteneciente a otro proceso.
+
+	- Particionada,
+		Problema resuelto:
+		Nuevo hardware necesario: registro base y de longitud.
+		Nuevo software necesario: rutinas de manejo de tablas, asignacion de archivos y dispositivos y programas de 
+			canal.
+
+	- Particionada reubicable.
+		Problema resuelto:
+		Nuevo hardware necesario:
+		Nuevo software necesario:
+
+	- Paginacion con memoria virtual.
+		Problema resuelto: no es necesario tener al programa completo en memoria para su ejecucion.
+		Nuevo hardware necesario: taductor de direcciones, registros de paginas, bit de pagina presente/ausente.
+		Nuevo software necesario: tablas de pagina por programa y las rutinas para el manejo de dichas tablas.
+
+	- Segmentacion.
+		Problema resuelto:
+		Nuevo hardware necesario:
+		Nuevo software necesario:
