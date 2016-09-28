@@ -258,3 +258,10 @@ cual se realizara la operacion.
 
 	e) Los permisos genericos son faciles de implementar en LCU. Falso.
 		Deberia colocarse en la LCU de cada usuario la referencia al archivo deseado.	
+
+16) Un inodo contiene:
+		Identificacion del usuario y del grupo.
+		Hora de la ultima modificacion y acceso al archivo.
+		Contador de hard links que apuntan al archivo.
+		Tipo de archivo (plano, directorio, link simbolico, dispositivo de caracteres, dispositivo de bloques, socket)
+			
