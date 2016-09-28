@@ -241,3 +241,20 @@ cual se realizara la operacion.
 	i) Si un proceso declara que quiere usar un archivo para leer y subitamente ejecuta un WRITE sobre este archivo
 		el VCA intercepta el WRITE y notifica un mensaje de error o cancela al proceso. Falso.
 		Solo aborta el proceso.
+
+15)
+	a) En LCA es mas facil borrar un archivo que en LCU. Verdadero.
+		En LCA se elimina la entrada del archivo en el catalogo del usuario OWNER y luego se liberan las entradas correspondientes al archivo 
+			y a su LCA en el DAB.
+		En LCU es necesario recorrer todas las LCU de los otros usuario rastreando las entradas que correspondan con el archivo eliminado, para
+			darlas de baja.
+	b) En LCU un archivo que pertenece a un usuario DEBE estar tambien en su LCU. Verdadero.
+		Hay una entrada que corresponde al directorio de los archivo que le son propios.
+	c) En LCU un archivo puede tener distintos nombres. Verdadero.
+		Distintos nombres apuntan al mismo registro.
+	
+	d) La LCU es mas segura que la LCA. Verdadero.
+		La facilidad de asignarle distintos nombres a un mismo archivo beneficia a la seguridad y confidencialidad del sistema.
+
+	e) Los permisos genericos son faciles de implementar en LCU. Falso.
+		Deberia colocarse en la LCU de cada usuario la referencia al archivo deseado.	
