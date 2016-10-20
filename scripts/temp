@@ -1,0 +1,5 @@
+#!/bin/bash
+#grep nico /etc/passwd | awk -F: '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7}'
+
+
+grep nico /etc/passwd | awk -F: 'BEGIN{FS=":"; OFS="\t"}{print $1,$2,$3,$4,$5,$6,$7}'
