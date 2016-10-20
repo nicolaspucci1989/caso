@@ -9,11 +9,11 @@ Implementacion de directorios.
 -----------------------------------------------------
 
 - Sistema de archivo simbolico SAS.
- 
-	Se busca el archivo por su nombre, pero pueden existir mas de un archivo con el mismo
+
+	Se busca el archivo por su nombre, pero puede existir mas de un archivo con el mismo
 nombre. El sistema de archivo simbolico busca en el Directorio de archivo simbolico en nombre
-del archivo y asi encontrar su unico identidificador. Se pasa este identidificador al Sistema
-de archivo basico. 
+del archivo y asi encuentra su unico identificador. Se pasa este identificador al Sistema
+de Archivo Basico.
 	El DAS se mantiene en el periferico de almacenamiento. Se copian a memoria las entradas
 que corresponden a archivos en uso. Esta tabla se denomina Tabla de Nombres de Archivo (TNA).
 
@@ -24,6 +24,9 @@ a memoria.
 	La tabla que se mantiene en memoria con las entradas del DAB recibe el nombre de Tabla de
 Archivos Abiertos (TAA). Su informacion es la siguiente.
 
+| IDENTIFICACION | LONG REG LOGICO | LONG REG FISICO | FORMATO | ORGANIZACION | PERMISOS
+| CONCURRENCIA | LISTA DE PROCESOS QUE LO ESTAN USANDO |
+
 - Verificacion de control de acceso VCA.
 
 	Se utiliza la entrada de la TAA que contiene la informacion del archivo.
@@ -32,13 +35,13 @@ Verifica si la accion que se quiere realizar sobre el archivo esta especificada 
 	Si no esta el permiso se aborta la accion, sino el control pasa al SAL.
 
 - Sistema de Archivo Logico SAL.
-	
+
 	Convierte el pedido de un registro logico a una secuencia de bytes logicos.
-	Teniendo el comienzo de la secuencia de bytes y su longitud, el SAL invoca el modulo de 
+	Teniendo el comienzo de la secuencia de bytes y su longitud, el SAL invoca el modulo de
 Sistema de Archivo Fisico (SAF).
 
 - Sistema de Archivo Fisico SAF.
-	
+
 	Su funcion es determinar en que bloque fisico se encuentra la secuencia de bytes especifi
 cada por el SAL. Para esto usa la entrada correspondiente en la TAA mas la longitud y direccion
 	Se lee el bloque y se lo coloca en el buffer correspondiente, se extrae de este buffer la
@@ -53,16 +56,212 @@ efectuar la escritura.
 cion aparecera en la TAA.
 
 ---------------------------------------------------------------------
+							Estructuras de directorios
+
+- Direcorios de un solo nivel.
+
+	Cada entrada en la tabla de directorio de archivo basico apunta a una estructura que mapea
+todos los bloques del archivo real en disco.
+
+- Directorios de varios niveles.
+
+	Para acceder a un archivo es necesario recorrer los n niveles que apuntan a dicho archivo.
+
+---------------------------------------------------------------------
 
 							Estructuras de control de acceso.
 
--Lista de control de acceso.
+- Lista de control de acceso LCA.
 
 	A cada archivo en el sistema se le asocia una lista de permisos. Se especifica para cada
 usuario las acciones que pueden realizar sobre el archvio.
 
-- Lista de cotrol de usuario.
+- Lista de cotrol de usuario LCU.
 
 	Por cada usuario existe una lista de los archivos a los cuales puede acceder y que acciones
-puede realizar.
+puede realizar. Un archivo puede ser visto con diferentes nombres por varios usuarios.
+
+
+- Comparacion LCA LCU.
+	Borrar archivo.
+		LCA: se elimina la entrada correspondiente en el catalogo del Owner. Luego se
+	eliminan las entradas del archivo y su LCA en el DAB.
+		LCU: Inconveniente, no se sabe que otros usuarios apuntan al archivo. Es
+	necesario recorrer la LCU de todos los usuarios para ver quienes tiene una entrada
+	correspondiente al archivo.
+
+---------------------------------------------------------------------
+						Operaciones de instrucciones de E/S
+
+- OPEN
+
+	Un archivo, antes de ser abierto debe ser asignado
+		La asignacion se realiza de la siguiente manera:
+			- Se genera la entrada para el dispositivo apuntada desde el BCP.
+			- Se genera la entrada para el archivo apuntada desde el BCP.
+			- Se genera una entrada en la TNA.
+
+	- OPEN sin ASSIGN
+
+		Con la informacion ya presente en la TNA, se busca el archivo en la TAA.
+		Si se encuentra entonces: el archivo estaba siendo usado por otro proceso y se controlan los permisos y concurrenci
+		segun los campos respectivos en la TAA, luego se asocia el dispositivo y el archivo al proceso.
+		Si no se encuentra entonces: se debe generar una entrada en la TAA accediendo al DAB en el disco y se copia la entrada
+		correspondiente al archivo en memoria
+
+	- OPEN con asignacion de dispositivo
+
+- CLOSE
+
+- DELETE
+
+---------------------------------------------------------------------
+
+					Calculo de la direcicon logica
+
+-Formato fijo
+
+	- Acceso secuencial.
+	- Acceso directo.
+
+-Formato variable.
+
+	- Acceso secuencial.
+	- Acceso directo.
+
+
+---------------------------------------------------------------------
+
+			Sistema de archivo fisico (SAF)
+
+Numero de bloque relativo (NBR) = [DBL / longitud de bloque]
+Direccion fisica (DF) = NBR + dir archivo
+
+
+---------------------------------------------------------------------
+- Pista
+	Una pista es una porcion del disco que pasa bajo una cabeza unica estacionaria durante
+la rotacion del disco. Una pista esta dividida en segmentos de sectores, que es la unidad
+basica de almacenamiento.
+
+- Cilindro
+	Un cilindro esta compuesto de un conjunto de pistas que estan bajo todas las cabezas
+(en platillos distintos) en una unica posicion. Cada cilindro es equidistante del centro del
+disco.
+
+El numero de sectores por pista varia con el radio de la pista en el platillo. Las pistas mas
+exteriores son mas largas y pueden contener mas sectores que las interiores. Estas pistas mas
+externas giran mas rapido bajo la cabeza que las interiores, porque mientras que la velocidad
+angular permanece igual, la circunferencia mas lagra resulta en mas sectores girando en el
+mismo periodo de tiempo para las pistas externas. Los bloques de discos son numerados
+empezando en la psita mas externa, asi que es una buena practica poner los datos que se espera
+seran accedidos mas frecuentemente en la particion, o porcion 0.
+---------------------------------------------------------------------
+					Practica fs
+
+1)a)
+- Solicitud de creacion de archivo
+	i) Archivo ARCH1 en paquete PAQ1 de 50 pistas, usuario LPR lee y graba.
+	CREAR(ARCH1, PAQ1, 50, {LPR} [L][G])
+	El modulo de SAS crea una etrada en el DAS: CALL SAS (CREAR, ...)
+	Se le asigna un ID al archivo. Se crea una entrada en el TNA
+	El modulo de SAB crea una nueva entrada en la TAA
+
+	ii) Archivo ARCH2 de 100 pistas, en paquete ABCD, leido por todos y grabado por LPR
+	CREAR(ARCH2, ABCD, 100, LPR [L][G], TODOS [L])
+
+	iii) CREAR(ARCH2, ABCD, 100, LPR [L][G], TODOS [L] INSPEC [G])
+
+3) Pasos necesarios para lectura de arhcivo.
+
+-SAS
+	El SAS busca en la TNA la entrada correspondiente al archivo requerido, si lo encuentra
+pasa la informacion al SAB, sino busca en el DAS la entrada que pertenece al archivo buscado.
+
+	CALL SAS (READ, ARCH1, registro logico a leer, dir de buffer destino)
+	^ devuelve la ID del archivo.
+
+-SAB
+	Busca la entrada correspondiente al ID en el DAB y copia la informacion a memoria en la
+TAA.
+
+	CALL SAB(READ, ARCH1, ID, reg logico a leer, dir buffer destino)
+
+-VCA
+	Con la id del archivo y la informacion aportada en la TAA, se verifica si la funcion que
+se quiere realizar sobre el archivo esta explicitada en la TAA.
+	Si no esta permitida el pedido es abortado, si esta permitida se pasa el control al modulo
+de SAL (sistema de archivos logico).
+	CALL VCA (READ, ARCH1, entrada del TAA correspondieten al archivo abierto,
+				reg logico a leer, dir de buffer destino)
+
+
+-SAF
+	Con la informacion proporcionada por la TAA y la direccion del bloque logico (dbl), y
+la longitud de la secuencia de bytes logicos (lsb) pasados por el SAL.
+	Se lee el bloque y se lo coloca en un buffer de memoria predifinido.
+
+-MEP
+	Convierte la el numero de bloque fisico al formato adecuado para que el periferico pueda
+comprenderlo. Ademas inicializa los comandos de E/S adecuados para el periferico sobre el
+cual se realizara la operacion.
+
+10)
+	b) Control de acceso
+			Lista de control de acceso. A cada archivo en el sistema se le asocia una lista de
+		permisos, en esta lista se especifican las acciones que cada usuario puede realizar
+		sobre el archivo.
+
+14)
+	a) El modulo que determina si se realiza una E/S fisica es el SAF. Falso
+		El MEP se encarga de los comandos de E/S, el SAF determina el bloque fisico donde se encuentra
+	la informacion requerida pasada por el SAL.
+
+	b) El modulo que sabe/controla si un archivo esta siendo usado concurrentemente es el VCA. Falso
+		El VCA verifica que la accion a realizar sobre el archivo este explicitada en la TAA.
+
+	c) Si un archivo ya esta abierto y se lo desea acceder entonces no interviene el SAS. Falso
+		Si un archivo ya esta abierto sus entradas estan presentes en la TAA y la TNA.
+		Al realizar alguna accion sobre algun archivo necesitamos su nombre para poder referenciar
+		al archivo, y asi obtener su ID. Esta operacion esta a cargo del SAS.
+		En tal caso no es necesario acceder al DAS en busca de la entrada correspondiente al archivo
+		en cuestion, ya que su entrada esta presente en la TNA ubicada en memoria.
+
+	d) Un CLOSE no genera E/S de datos del archivo si este archivo fue abierto en modod lectura. Falso
+	Si bien no se modifica el contenido del archivo, la informacion correspondiente tiempo del ultimo
+	acceso si debe ser actualizada.
+
+	f) El MEA solo interviene cuando es necesario espacio para el dato que se intenta grabar para el archivo. Verdadero
+
+	g) Si la informacion de la TAA fue alterada durante el uso del archivo es necesario regrabarla en el DAB cuando el 
+		archivo se cierra. Verdadero.
+	
+	h) Una vez que el archivo ya esta abierto se lo accede desde el puntero del BCP. Verdadero.
 		
+	i) Si un proceso declara que quiere usar un archivo para leer y subitamente ejecuta un WRITE sobre este archivo
+		el VCA intercepta el WRITE y notifica un mensaje de error o cancela al proceso. Falso.
+		Solo aborta el proceso.
+
+15)
+	a) En LCA es mas facil borrar un archivo que en LCU. Verdadero.
+		En LCA se elimina la entrada del archivo en el catalogo del usuario OWNER y luego se liberan las entradas correspondientes al archivo 
+			y a su LCA en el DAB.
+		En LCU es necesario recorrer todas las LCU de los otros usuario rastreando las entradas que correspondan con el archivo eliminado, para
+			darlas de baja.
+	b) En LCU un archivo que pertenece a un usuario DEBE estar tambien en su LCU. Verdadero.
+		Hay una entrada que corresponde al directorio de los archivo que le son propios.
+	c) En LCU un archivo puede tener distintos nombres. Verdadero.
+		Distintos nombres apuntan al mismo registro.
+	
+	d) La LCU es mas segura que la LCA. Verdadero.
+		La facilidad de asignarle distintos nombres a un mismo archivo beneficia a la seguridad y confidencialidad del sistema.
+
+	e) Los permisos genericos son faciles de implementar en LCU. Falso.
+		Deberia colocarse en la LCU de cada usuario la referencia al archivo deseado.	
+
+16) Un inodo contiene:
+		Identificacion del usuario y del grupo.
+		Hora de la ultima modificacion y acceso al archivo.
+		Contador de hard links que apuntan al archivo.
+		Tipo de archivo (plano, directorio, link simbolico, dispositivo de caracteres, dispositivo de bloques, socket)
+			
