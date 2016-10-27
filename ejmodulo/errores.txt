@@ -1,0 +1,67 @@
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c: In function ‘init_module’:
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:73:2: error: implicit declaration of function ‘create_proc_entry’ [-Werror=implicit-function-declaration]
+  Our_Proc_File = create_proc_entry(procfs_name, 0644, NULL);
+  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:73:16: warning: assignment makes pointer from integer without a cast [enabled by default]
+  Our_Proc_File = create_proc_entry(procfs_name, 0644, NULL);
+                ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:75:34: error: ‘proc_root’ undeclared (first use in this function)
+  remove_proc_entry(procfs_name, &proc_root);
+                                  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:75:34: note: each undeclared identifier is reported only once for each function it appears in
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:80:2: error: stray ‘\342’ in program
+  Our_Proc_File−>read_proc = procfile_read;
+  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:80:2: error: stray ‘\210’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:80:2: error: stray ‘\222’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:80:19: error: ‘read_proc’ undeclared (first use in this function)
+  Our_Proc_File−>read_proc = procfile_read;
+                   ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:81:2: error: stray ‘\342’ in program
+  Our_Proc_File−>owner = THIS_MODULE;
+  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:81:2: error: stray ‘\210’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:81:2: error: stray ‘\222’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:81:19: error: ‘owner’ undeclared (first use in this function)
+  Our_Proc_File−>owner = THIS_MODULE;
+                   ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:82:2: error: stray ‘\342’ in program
+  Our_Proc_File−>mode = S_IFREG | S_IRUGO;
+  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:82:2: error: stray ‘\210’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:82:2: error: stray ‘\222’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:82:19: error: ‘mode’ undeclared (first use in this function)
+  Our_Proc_File−>mode = S_IFREG | S_IRUGO;
+                   ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:83:2: error: stray ‘\342’ in program
+  Our_Proc_File−>uid = 0;
+  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:83:2: error: stray ‘\210’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:83:2: error: stray ‘\222’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:83:19: error: ‘uid’ undeclared (first use in this function)
+  Our_Proc_File−>uid = 0;
+                   ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:84:2: error: stray ‘\342’ in program
+  Our_Proc_File−>gid = 0;
+  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:84:2: error: stray ‘\210’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:84:2: error: stray ‘\222’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:84:19: error: ‘gid’ undeclared (first use in this function)
+  Our_Proc_File−>gid = 0;
+                   ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:85:2: error: stray ‘\342’ in program
+  Our_Proc_File−>size = 37;
+  ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:85:2: error: stray ‘\210’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:85:2: error: stray ‘\222’ in program
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:85:19: error: ‘size’ undeclared (first use in this function)
+  Our_Proc_File−>size = 37;
+                   ^
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c: In function ‘cleanup_module’:
+/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.c:91:34: error: ‘proc_root’ undeclared (first use in this function)
+  remove_proc_entry(procfs_name, &proc_root);
+                                  ^
+cc1: some warnings being treated as errors
+make[2]: *** [/home/nico/documentos/repo_git/caso/ejmodulo/procfs1.o] Error 1
+make[1]: *** [_module_/home/nico/documentos/repo_git/caso/ejmodulo] Error 2
+make: *** [build] Error 2
